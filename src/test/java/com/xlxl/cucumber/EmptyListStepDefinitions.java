@@ -6,7 +6,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
 
-public class HelloWorldStepDefinitions {
+public class EmptyListStepDefinitions {
     private Integer val;
     private String actualAnswer;
 
