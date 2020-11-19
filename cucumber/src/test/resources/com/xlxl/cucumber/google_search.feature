@@ -1,3 +1,4 @@
+@selenium
 Feature: Google search result should start correctly
 
   Scenario: Finding some cucumber

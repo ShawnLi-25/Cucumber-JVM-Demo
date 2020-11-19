@@ -1,3 +1,4 @@
+@lru
 Feature: Verify the correctness of LRU cache implementation
   We need to make sure every public API is correct
 
