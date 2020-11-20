@@ -1,5 +1,5 @@
-Feature: sample karate test script
-  for help, see: https://github.com/intuit/karate/wiki/IDE-Support
+Feature: Fake online REST API testing
+  Karate API test for 'https://jsonplaceholder.typicode.com'
 
   Background:
     * url 'https://jsonplaceholder.typicode.com'

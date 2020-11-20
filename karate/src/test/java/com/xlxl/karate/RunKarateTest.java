@@ -1,12 +1,9 @@
 package com.xlxl.karate;
 
-import com.intuit.karate.junit5.Karate;
+import com.intuit.karate.junit4.Karate;
+import org.junit.runner.RunWith;
 
-class RunKatateTest {
-
-    @Karate.Test
-    Karate testUsers() {
-        return Karate.run("users").relativeTo(getClass());
-    }
+@RunWith(Karate.class)
+class RunKarateTest {
 
 }
