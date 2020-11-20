@@ -1,6 +1,7 @@
 package com.xlxl.cucumber;
 
 import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,42 +9,61 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import org.junit.Assert;
+
 public class GoogleSearchStepDefinitions {
-    private static final WebDriver driver;
+    private final SearchResultPage page;
 
     static {
         // Set system property to use chromedriver properly
         System.setProperty("webdriver.chrome.driver", "/Applications/chromedriver");
-        driver = new ChromeDriver();
+    }
+
+    public GoogleSearchStepDefinitions() {
+        this.page = new SearchResultPage();
+    }
+
+    @Before("@selenium")
+    public void createDriver() {
+        page.createDriver();
     }
 
     @Given("I am on the Google search page")
     public void visitGoogle() {
-        driver.get("https://www.google.com");
+        this.page.getDriver().get("https://www.google.com");
     }
 
     @When("I search for {string}")
     public void searchFor(String query) {
-        WebElement element = driver.findElement(By.name("q"));
+        WebElement element = this.page.getDriver().findElement(By.name("q"));
         element.sendKeys(query);
         element.submit();
+        sleep();
     }
 
-    @Then("the page title should start with {string}")
+    @Then("The page title should start with {string}")
     public void checkTitle(String titleStartsWith) {
-        new WebDriverWait(driver,5L).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                return d.getTitle().toLowerCase().startsWith(titleStartsWith);
-            }
-        });
+        Assert.assertTrue(this.page.ifStartWith(titleStartsWith));
     }
 
-    @After()
+    @Then("{string} is displayed in any of the first {int} results with title selector {string}")
+    public void isDisplayedInResults(String expectedResult, int numOfResultsToSearch, String titleSelector) {
+        Assert.assertTrue(this.page.ifInResults(expectedResult, numOfResultsToSearch, titleSelector));
+    }
+
+    @After("@selenium")
     public void closeBrowser() {
-        driver.quit();
+        this.page.getDriver().quit();
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            System.out.println("Sleep error?" + e);
+        }
     }
 }

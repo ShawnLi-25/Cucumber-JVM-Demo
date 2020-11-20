@@ -2,37 +2,32 @@ Feature: Fake online REST API testing
   Karate API test for 'https://jsonplaceholder.typicode.com'
 
   Background:
-    * url 'https://jsonplaceholder.typicode.com'
+    Given url 'https://jsonplaceholder.typicode.com'
 
-  Scenario: get all users and then get the first user by id
-    Given path 'users'
+  Scenario: Fetch all albums and then verify the 8th has a title
+    Given path 'albums'
     When method get
     Then status 200
 
-    * def first = response[0]
+    * def firstAlbum = response[7]
 
-    Given path 'users', first.id
+    Given path 'albums', firstAlbum.id
     When method get
     Then status 200
+    And match response contains { title: '#notnull' }
 
   Scenario: create a user and then get it by id
-    * def user =
+    * def testUser =
       """
       {
         "name": "Test User",
-        "username": "testuser",
-        "email": "test@user.com",
-        "address": {
-          "street": "Has No Name",
-          "suite": "Apt. 123",
-          "city": "Electri",
-          "zipcode": "54321-6789"
-        }
+        "username": "testUser",
+        "email": "testUser@gmail.com",
       }
       """
 
-    Given url 'https://jsonplaceholder.typicode.com/users'
-    And request user
+    Given path 'users'
+    And request testUser
     When method post
     Then status 201
 
