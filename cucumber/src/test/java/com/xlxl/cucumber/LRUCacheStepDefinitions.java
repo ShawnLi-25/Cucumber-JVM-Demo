@@ -7,7 +7,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
 
-public class LRUCacheStepDefinition {
+public class LRUCacheStepDefinitions {
     private LRUCache testLRUCache;
 
     @Given("I have a LRU cache with capacity {int}")
