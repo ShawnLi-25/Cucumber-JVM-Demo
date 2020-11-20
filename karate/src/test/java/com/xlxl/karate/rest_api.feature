@@ -1,4 +1,4 @@
-Feature: Fake online REST API testing
+Feature: Test fake online REST APIs
   Karate API test for 'https://jsonplaceholder.typicode.com'
 
   Background:
@@ -16,7 +16,7 @@ Feature: Fake online REST API testing
     Then status 200
     And match response contains { title: '#notnull' }
 
-  Scenario: create a user and then get it by id
+  Scenario: Create a user and then get it by id will return 404
     * def testUser =
       """
       {
@@ -32,10 +32,9 @@ Feature: Fake online REST API testing
     Then status 201
 
     * def id = response.id
-    * print 'created id is: ', id
+    * print 'The new created user id is: ', id
 
-    Given path id
-    # When method get
-    # Then status 200
-    # And match response contains user
-  
+    Given path 'users', id
+     When method get
+     Then status 404
+     And match response == {}

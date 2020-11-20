@@ -46,7 +46,7 @@ public class GoogleSearchStepDefinitions {
         Assert.assertTrue(this.page.ifStartWith(titleStartsWith));
     }
 
-    @Then("{string} is displayed in any of the first {int} results with title selector {string}")
+    @Then("{string} is displayed in any of the first {int} results with css title selector {string}")
     public void isDisplayedInResults(String expectedResult, int numOfResultsToSearch, String titleSelector) {
         Assert.assertTrue(this.page.ifInResults(expectedResult, numOfResultsToSearch, titleSelector));
     }

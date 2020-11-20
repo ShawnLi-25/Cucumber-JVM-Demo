@@ -1,11 +1,11 @@
 @selenium
-Feature: Google search result should start correctly
+Feature: Google search result should be correct
 
   Scenario Outline: Search for cucumber
     Given I am on the Google search page
     When I search for "<query>"
     Then The page title should start with "<query>"
-    And "<query>" is displayed in any of the first <val> results with title selector "<selector>"
+    And "<query>" is displayed in any of the first <val> results with css title selector "<selector>"
 
     Examples:
       | query    | val | selector |
